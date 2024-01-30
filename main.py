@@ -1,5 +1,7 @@
 from flask import Flask,render_template, request
 
+import forms
+
 app=Flask(__name__)
 
 
@@ -7,11 +9,16 @@ app=Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route("/alumnos")
+@app.route("/alumnos",methods=['GET','POST'])
 def alumnos():
-    titulo="UTL!!!"
+    alumno_clase= forms.UserForm(request.form)
+    if request.method=='POST':
+        pass
+    
+    return render_template("alumnos.html",form=alumno_clase)
+    '''titulo="UTL!!!"
     nombres=["mario","pedro","juan","darios"]
-    return render_template("alumnos.html",titulo=titulo,nombres=nombres)
+    return render_template("alumnos.html",titulo=titulo,nombres=nombres)'''
 
 @app.route("/maestros")
 def maestros():
@@ -75,4 +82,4 @@ def resul():
 
 
 if __name__=="__main__":
-    app.run(debug=True) #en debug es para que siempre se vean los cambios sin tener que correrlo otra vez 
+    app.run(debug=True) #en debug es para que siempre se vean los cambios sin tener que correrlo otra vez
