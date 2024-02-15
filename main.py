@@ -11,11 +11,19 @@ def index():
 
 @app.route("/alumnos",methods=['GET','POST'])
 def alumnos():
+    nom=""
+    apa=''
+    ama=''
     alumno_clase= forms.UserForm(request.form)
-    if request.method=='POST':
-        pass
-    
-    return render_template("alumnos.html",form=alumno_clase)
+    if request.method=='POST' and alumno_clase.validate(): #si los datos estan validados los pase
+        nom=alumno_clase.nombre.data
+        apa=alumno_clase.apaterno.data
+        ama=alumno_clase.amaterno.data
+        
+        print('Nombre: {}'.format(nom))
+        print('Apaterno: {}'.format(apa))
+        print('Amaterno: {}'.format(ama))
+    return render_template("alumnos.html",form=alumno_clase,nom=nom,apa=apa,ama=ama)
     '''titulo="UTL!!!"
     nombres=["mario","pedro","juan","darios"]
     return render_template("alumnos.html",titulo=titulo,nombres=nombres)'''
@@ -32,17 +40,17 @@ def hola():
 def saludo():
     return "<h1>Saludos desde Saludo</h1>"
 
-@app.route("/nombre/<string:nom>")
+'''@app.route("/nombre/<string:nom>")
 def nombre(nom):
-    return "Hola :"+nom
+    return "Hola :"+nom'''
 
 @app.route("/numero/<int:n1>")
 def numero(n1):
     return "Numero: {}".format(n1)
 
-@app.route("/user/<int:id>/<string:nom>")
+'''@app.route("/user/<int:id>/<string:nom>")
 def func(id,nom):
-    return "ID: {} Nombre: {}".format(id,nom)
+    return "ID: {} Nombre: {}".format(id,nom)'''
 
 @app.route("/suma/<float:n1>/<float:n2>")
 def func2(n1,n2):
